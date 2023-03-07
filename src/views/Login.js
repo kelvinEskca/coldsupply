@@ -2,15 +2,18 @@ import { Link,useNavigate } from "react-router-dom";
 import React,{useState} from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import Loader from "../components/Loader";
 import axios from "axios";
 const Login = ({onAdd,cart,onRemove,handleSize,cartLength}) => {
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
     const [loggedIn, setLoggedIn] = useState(false);
+    const [isLoading,setIsLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleSubmit = async (e)=>{
         e.preventDefault();
+        setIsLoading(true);
         try{
             const loginUser = await axios.post('https://api-production-ecae.up.railway.app/api/auth/login',{
                 email:email,
@@ -22,13 +25,16 @@ const Login = ({onAdd,cart,onRemove,handleSize,cartLength}) => {
                 localStorage.setItem("token", loginUser.data.accessToken);
                 localStorage.setItem('user',JSON.stringify(loginUser.data));
                 if(loginUser.data.isAdmin === false){
+                    setIsLoading(false);
                     navigate('/account');
                 }
                 else{
+                    setIsLoading(false);
                     navigate('/admindashboard');
                 }
             }
             else{
+                setIsLoading(false);
                 setLoggedIn(false);
             }
         }
@@ -61,7 +67,7 @@ const Login = ({onAdd,cart,onRemove,handleSize,cartLength}) => {
                                     </label>
 
                                     <label htmlFor="#">
-                                        <button type="submit">Login</button>
+                                        {isLoading ? (<Loader/>) : (<button type="submit">Login</button>)}
                                     </label>
                                 </form>
 

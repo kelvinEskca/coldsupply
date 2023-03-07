@@ -3,16 +3,19 @@ import React,{useState} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import Loader from "../components/Loader";
 const Register = ({onAdd,cart,onRemove,handleSize,cartLength}) => {
     const [fname,setFname] = useState('');
     const [lname,setLname] = useState('');
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
     const [cpassword,setcPassword] = useState('');
+    const [isLoading,setIsLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleSubmit = async (e) =>{
         e.preventDefault();
+        setIsLoading(true);
         if(email === ''  || fname === '' || lname === '' || password === '' || cpassword === ''){
             alert('Please ensure all fields are filled');
         }
@@ -29,9 +32,11 @@ const Register = ({onAdd,cart,onRemove,handleSize,cartLength}) => {
                     cpassword:cpassword
                 });
                 console.log(userSubmit);
+                setIsLoading(false);
                 navigate('/login');
             }
             catch(err){
+                setIsLoading(false);
                 console.log(err);
             }
         }
@@ -79,7 +84,7 @@ const Register = ({onAdd,cart,onRemove,handleSize,cartLength}) => {
                                     </label>
 
                                     <label htmlFor="#">
-                                        <button type="submit">Create Account</button>
+                                        {isLoading ? (<Loader/>) : (<button type="submit">Create Account</button>)}
                                     </label>
                                 </form>
                                 <Link to='/store' className="grey">Go back to store</Link>
