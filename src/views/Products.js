@@ -4,6 +4,7 @@ import AdminHeader from "../components/AdminHeader";
 import { useNavigate } from "react-router-dom";
 import { Multiselect } from 'multiselect-react-dropdown';
 import axios from "axios";
+import Loader from "../components/Loader";
 const Products = () => {
     const [size,setSize] = useState([]);
     const [price,setPrice] = useState('');
@@ -14,6 +15,7 @@ const Products = () => {
     const [image,setImage] = useState([]);
     const navigate = useNavigate();
     const token = localStorage.getItem('token');
+    const [isLoading,setIsLoading] = useState(false);
 
     const formData = new FormData();
     size.map((item,i)=>{
@@ -30,6 +32,7 @@ const Products = () => {
 
     const handleForm = async (e) =>{
         e.preventDefault();
+        setIsLoading(true);
         if(size  === '' || details === '' || price === '' || title === '' || quantity === '' || stock === '' || image === ''){
             alert('Please Ensure All fields are filled');
         }
@@ -39,10 +42,12 @@ const Products = () => {
                 formData,{headers:{token:token}});
                 console.log(productSubmit);
                 if(productSubmit.status === 200){
+                    setIsLoading(false);
                     alert(productSubmit.data.message);
                     navigate('/productslisting');
                 }
                 else{
+                    setIsLoading(false);
                     alert(productSubmit.data.message);
                 }
             }
@@ -155,7 +160,7 @@ const Products = () => {
 
                                     <div className="row">
                                         <label htmlFor="#">
-                                            <button>Save</button>
+                                        {isLoading ? (<Loader/>) : (<button type="submit">Save</button>)}
                                         </label>
 
                                         <label htmlFor="#">
