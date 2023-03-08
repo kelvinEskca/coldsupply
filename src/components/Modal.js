@@ -34,7 +34,7 @@ const Modal = ({cart, modaltoggle,onRemove,onAdd}) => {
                             <div className="cart-items" key={i}>
                                 <div className="items">
                                     <div className="box">
-                                        <img src={`../assets/${item.image[0].originalname}`} alt={item.title} />
+                                        <img src={`${item.image[0].url}`} alt={item.title} />
                                     </div>
                                     <div className="desc">
                                         <div className="desc-row">
@@ -42,7 +42,7 @@ const Modal = ({cart, modaltoggle,onRemove,onAdd}) => {
                                         </div>
                                         <div className="qty-toggle">
                                             <span className="minus" onClick={()=> onRemove(item)}>-</span>
-                                            <span className="qty">{item.quantity}</span>
+                                            <span className="qty">{item.qty}</span>
                                             <span className="add" onClick={()=> onAdd(item)}>+</span>
                                         </div>
                                     </div>

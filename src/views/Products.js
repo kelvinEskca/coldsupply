@@ -3,6 +3,7 @@ import AdminFooter from "../components/AdminFooter";
 import AdminHeader from "../components/AdminHeader";
 import { useNavigate } from "react-router-dom";
 import { Multiselect } from 'multiselect-react-dropdown';
+import baseUrl  from "../config/config";
 import axios from "axios";
 import Loading from "../components/Loading";
 const Products = () => {
@@ -16,12 +17,14 @@ const Products = () => {
     const navigate = useNavigate();
     const token = localStorage.getItem('token');
     const [isLoading,setIsLoading] = useState(false);
-    const baseUrl = process.env.REACT_APP_API_URL;
 
     const formData = new FormData();
-    size.map((item,i)=>{
-        return formData.append("size", item.size);
-    })
+    if (Array.isArray(size)) {
+        const sizeValues = size.map((item) => item.size);
+        formData.append("size", sizeValues);
+    } else {
+        formData.append("size", size);
+    }
     formData.append("price", price);
     formData.append("title", title);
     formData.append("details", details);
@@ -34,12 +37,13 @@ const Products = () => {
     const handleForm = async (e) =>{
         e.preventDefault();
         setIsLoading(true);
-        if(size  === '' || details === '' || price === '' || title === '' || quantity === '' || stock === '' || image === ''){
+        if(size.length === 0 || details === '' || price === '' || title === '' || quantity === '' || stock === '' || image === ''){
             alert('Please Ensure All fields are filled');
+            setIsLoading(false);
         }
         else{
             try{
-                const productSubmit = await axios.post(`${baseUrl}/api/product`,
+                const productSubmit = await axios.post(`${baseUrl.baseUrl}/api/product`,
                 formData,{headers:{token:token}});
                 console.log(productSubmit);
                 if(productSubmit.status === 200){
@@ -70,15 +74,17 @@ const Products = () => {
 
     const cancel = (e) =>{
         e.preventDefault();
-        setSize("");
+        setSize([]);
         setPrice("");
         setDetails("");
         setTitle("");
         setQuantity("");
         setStock("");
-        setImage("");
+        setImage([]);
+        setIsLoading(false);
     }
 
+    console.log(size);
     return (
         <React.Fragment>
             <AdminHeader/>
@@ -112,8 +118,8 @@ const Products = () => {
                                    
                                     <label htmlFor="#">Sizes Available
                                         <Multiselect options={options} displayValue="size" onSelect={(e)=>{
-                                            setSize(e)
-                                        }}/>
+                                            setSize([...e])
+                                        }}onRemove={(size) => setSize(size)}/>
                                     </label>
                                  
                                     
@@ -162,11 +168,11 @@ const Products = () => {
 
                                     <div className="row">
                                         <label htmlFor="#">
-                                        {isLoading ? (<Loading/>) : (<button type="submit">Save</button>)}
+                                        {isLoading ? (<button className="loadBtn"><Loading/></button>) : (<button type="submit">Save</button>)}
                                         </label>
 
                                         <label htmlFor="#">
-                                            <button style={{'backgroundColor':'#fafafa','color':'#222','border':'1px solid #111'}} onClick={cancel}>Cancel</button>
+                                            <button type="button" style={{'backgroundColor':'#fafafa','color':'#222','border':'1px solid #111'}} onClick={(e)=>cancel(e)}>Cancel</button>
                                         </label>
                                     </div>
                                     

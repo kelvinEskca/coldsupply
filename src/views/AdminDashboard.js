@@ -2,6 +2,7 @@ import React,{useState,useEffect} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import AdminFooter from "../components/AdminFooter";
 import AdminHeader from "../components/AdminHeader";
+import baseUrl  from "../config/config";
 import axios from "axios";
 
 const AdminDashboard = () => {
@@ -10,14 +11,13 @@ const AdminDashboard = () => {
     const [totalUsers,settotalUsers] = useState('');
     const [totalOrders,settotalOrders] = useState('');
     const [totalProducts,settotalProducts] = useState('');
-    const baseUrl = process.env.REACT_APP_API_URL;
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
     useEffect(()=>{
         const token = localStorage.getItem('token');
         const getUsers = async ()=>{
             try{
-                const res = await axios.get(`${baseUrl}/api/users`,{ headers:{token:token} });
+                const res = await axios.get(`${baseUrl.baseUrl}/api/users`,{ headers:{token:token} });
                 settotalUsers(res.data.total);
                 setusers(res.data.users);
             }
@@ -26,13 +26,13 @@ const AdminDashboard = () => {
             }
         }
         getUsers();
-    },[baseUrl]);
+    },[]);
 
     useEffect(()=>{
         const token = localStorage.getItem('token');
         const getOrders = async ()=>{
             try{
-                const res = await axios.get(`${baseUrl}/api/order`,{ headers:{token:token} });
+                const res = await axios.get(`${baseUrl.baseUrl}/api/order`,{ headers:{token:token} });
                 settotalOrders(res.data.total);
             }
             catch(err){
@@ -40,7 +40,7 @@ const AdminDashboard = () => {
             }
         }
         getOrders();
-    },[baseUrl]);
+    },[]);
 
     useEffect(()=>{
         const getProducts = async ()=>{
@@ -58,7 +58,7 @@ const AdminDashboard = () => {
     const handleDelete = async (i) =>{
         const id = i._id;
         try{
-            const res = await axios.post(`${baseUrl}/api/users/delete/${id}`,{
+            const res = await axios.post(`${baseUrl.baseUrl}/api/users/delete/${id}`,{
                 id:id
             },{ headers:{token:token} });
             if(res.status === 200){

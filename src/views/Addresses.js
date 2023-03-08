@@ -2,6 +2,7 @@ import React,{useState} from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { Link,useNavigate } from "react-router-dom";
+import baseUrl  from "../config/config";
 import axios from "axios";
 const Addresses = ({onAdd,cart,onRemove,handleSize,cartLength}) => {
     axios.defaults.withCredentials = true;
@@ -11,7 +12,6 @@ const Addresses = ({onAdd,cart,onRemove,handleSize,cartLength}) => {
     const token = localStorage.getItem('token');
     const user = JSON.parse(localStorage.getItem('user'));
     const useraddress = JSON.parse(localStorage.getItem('address'));
-    const baseUrl = process.env.REACT_APP_API_URL;
     const navigate = useNavigate();
     
     const handleForm = () =>{
@@ -37,7 +37,7 @@ const Addresses = ({onAdd,cart,onRemove,handleSize,cartLength}) => {
         e.preventDefault();
         if(address !== ''){
             try{
-                const result = await axios.post(`${baseUrl}/api/address`,{
+                const result = await axios.post(`${baseUrl.baseUrl}/api/address`,{
                     fname:address.fname,
                     lname:address.lname,
                     email:user.email,

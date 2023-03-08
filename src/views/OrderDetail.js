@@ -2,19 +2,19 @@ import React,{useState,useEffect} from "react";
 import {useParams} from "react-router-dom";
 import AdminFooter from "../components/AdminFooter";
 import AdminHeader from "../components/AdminHeader";
+import baseUrl  from "../config/config";
 import axios from "axios";
 
 const OrderDetail = () => {
     axios.defaults.withCredentials = true;
     const [list,setList] = useState([]);
     const [listDetail,setListDetail] = useState('');
-    const baseUrl = process.env.REACT_APP_API_URL;
     const { id } = useParams();
     useEffect(()=>{
         const token = localStorage.getItem('token');
         const getorders = async ()=>{
             try{
-                const res = await axios.get(`${baseUrl}/api/order/${id}`,{ headers:{token:token} });
+                const res = await axios.get(`${baseUrl.baseUrl}/api/order/${id}`,{ headers:{token:token} });
                 setList(res.data);
             }
             catch(err){
@@ -22,7 +22,7 @@ const OrderDetail = () => {
             }
         }
         getorders();
-    },[id,baseUrl]);
+    },[id]);
 
     const showDetail = (i) =>{
         setListDetail(i);

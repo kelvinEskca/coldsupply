@@ -2,15 +2,15 @@ import React,{useEffect,useState} from "react";
 import { useParams } from 'react-router-dom';
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import baseUrl  from "../config/config";
 import axios from "axios";
 const StoreSingle = ({onAdd,cart,onRemove,handleSize,cartLength}) => {
     const [list,setList] = useState([]);
-    const baseUrl = process.env.REACT_APP_API_URL;
     const { id } = useParams();
     useEffect(()=>{
         const getProducts = async ()=>{
             try{
-                const res = await axios.get(`${baseUrl}/api/product/${id}`);
+                const res = await axios.get(`${baseUrl.baseUrl}/api/product/${id}`);
                 setList(res.data);
             }
             catch(err){
@@ -18,10 +18,10 @@ const StoreSingle = ({onAdd,cart,onRemove,handleSize,cartLength}) => {
             }
         }
         getProducts();
-    },[id,baseUrl]);
+    },[id]);
     
     console.log(list);
-    const {title,price,desc,size} = list;
+    const {title,price,details,size} = list;
     const item = cart.find((query)=> query._id === list._id);
 
     return (
@@ -35,21 +35,15 @@ const StoreSingle = ({onAdd,cart,onRemove,handleSize,cartLength}) => {
                                 
                                 {list.length !== 0 ? (
                                     <>
-                                        <img src={`../assets/${list.image[0].originalname}`} alt="shirt" />
+                                        <img src={`${list.image[0].url}`} alt="shirt" />
                                         <div className="shirt-images">
-                                            <div className="shirt">
-                                                <img src={`../assets/${list.image[0].originalname}`} alt="shirt" />
-                                            </div>
-                                            <div className="shirt">
-                                                <img src={`../assets/${list.image[1].originalname}`} alt="shirt" />
-                                            </div>
-                                            <div className="shirt">
-                                                <img src={`../assets/${list.image[2].originalname}`} alt="shirt" />
-                                            </div>
-                                            
-                                            <div className="shirt">
-                                                <img src={`../assets/${list.image[3].originalname}`} alt="shirt" />
-                                            </div>
+                                            {list.image.map((item,i)=>{
+                                                return (
+                                                    <div className="shirt">
+                                                        <img src={`${item.url}`} alt="shirt" key={i} />
+                                                    </div>
+                                                )
+                                            })}                                    
                                         </div>
                                     </>
 
@@ -64,7 +58,7 @@ const StoreSingle = ({onAdd,cart,onRemove,handleSize,cartLength}) => {
                                     <h3 className="heading">{`$ ${price}`}</h3>
                                 </div>
 
-                                <p className="paragraph desc">{desc}</p>
+                                <p className="paragraph desc">{details}</p>
 
                                 <div className="size">
                                     <p className="paragraph">Size:</p>

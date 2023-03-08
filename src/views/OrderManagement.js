@@ -2,6 +2,7 @@ import React,{useState,useEffect} from "react";
 import {Link,useNavigate} from "react-router-dom";
 import AdminFooter from "../components/AdminFooter";
 import AdminHeader from "../components/AdminHeader";
+import baseUrl  from "../config/config";
 import axios from "axios";
 
 const OrderListing = () => {
@@ -9,12 +10,11 @@ const OrderListing = () => {
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
     const [orders,setorders] = useState([]);
-    const baseUrl = process.env.REACT_APP_API_URL;
 
     const handleDelete = async (i) =>{
         const id = i._id;
         try{
-            const res = await axios.post(`${baseUrl}/api/order/delete/${id}`,{
+            const res = await axios.post(`${baseUrl.baseUrl}/api/order/delete/${id}`,{
                 id:id
             },{ headers:{token:token} });
             if(res.status === 200){
@@ -33,7 +33,7 @@ const OrderListing = () => {
     useEffect(()=>{
         const getorders = async ()=>{
             try{
-                const res = await axios.get(`${baseUrl}/api/order`,{ headers:{token:token} });
+                const res = await axios.get(`${baseUrl.baseUrl}/api/order`,{ headers:{token:token} });
                 setorders(res.data.orders);
             }
             catch(err){
@@ -41,7 +41,7 @@ const OrderListing = () => {
             }
         }
         getorders();
-    },[token,baseUrl]);
+    },[token]);
     return (
         <React.Fragment>
             <AdminHeader/>

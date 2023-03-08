@@ -35,7 +35,7 @@ const App = () => {
     const exist = cart.find((item)=> item._id === list._id);
     if(exist){
       //increase the qty by 1;
-      const newCartItems = cart.map((newitem)=> newitem._id === list._id ? {...exist, quantity: exist.quantity + 1} : newitem);
+      const newCartItems = cart.map((newitem)=> newitem._id === list._id ? {...exist, qty: exist.qty + 1} : newitem);
       setCart(newCartItems);
       localStorage.setItem('cartItems', JSON.stringify(newCartItems));
     }
@@ -48,13 +48,13 @@ const App = () => {
 
   const onRemove = (list)=>{
     const exist = cart.find((item)=> item._id === list._id);
-    if(exist.quantity === 1){
+    if(exist.qty === 1){
       const newCartItems = cart.filter((item)=> item._id !== list._id);
       setCart(newCartItems);
       localStorage.setItem('cartItems', JSON.stringify(newCartItems));
     }
     else{
-      const newCartItems = cart.map((item)=>item._id === list._id ? {...exist,quantity:exist.quantity - 1} : item);
+      const newCartItems = cart.map((item)=>item._id === list._id ? {...exist,qty:exist.qty - 1} : item);
       setCart(newCartItems);
       localStorage.setItem('cartItems', JSON.stringify(newCartItems));
     }

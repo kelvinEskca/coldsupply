@@ -2,17 +2,17 @@ import React,{useState,useEffect} from "react";
 import {Link,useNavigate} from "react-router-dom";
 import AdminFooter from "../components/AdminFooter";
 import AdminHeader from "../components/AdminHeader";
+import baseUrl  from "../config/config";
 import axios from "axios";
 
 const ProductsListing = () => {
     const [products,setproducts] = useState([]);
     const token = localStorage.getItem('token');
-    const baseUrl = process.env.REACT_APP_API_URL;
     const navigate = useNavigate();
     const handleDelete = async (i) =>{
         const id = i._id;
         try{
-            const res = await axios.post(`${baseUrl}/api/product/delete/${id}`,{
+            const res = await axios.post(`${baseUrl.baseUrl}/api/product/delete/${id}`,{
                 id:id
             },{ headers:{token:token} });
             if(res.status === 200){
@@ -30,7 +30,7 @@ const ProductsListing = () => {
     useEffect(()=>{
         const getProducts = async ()=>{
             try{
-                const res = await axios.get(`${baseUrl}/api/product`);
+                const res = await axios.get(`${baseUrl.baseUrl}/api/product`);
                 setproducts(res.data.products);
             }
             catch(err){
@@ -38,7 +38,7 @@ const ProductsListing = () => {
             }
         }
         getProducts();
-    },[baseUrl]);
+    },[]);
 
     return (
         <React.Fragment>
@@ -63,9 +63,9 @@ const ProductsListing = () => {
                                 return (
                                     <div className="table-body" key={i}>
                                         <div className="table"><p className="paragraph">{item._id}</p></div>
-                                        <div className="table row-img"><div className="image-box"><img src={`../assets/${item.image[0].originalname}`} alt={item.title} /></div><p className="paragraph">{`${item.title}`} </p></div>
+                                        <div className="table row-img"><div className="image-box"><img src={`${item.image[0].url}`} alt={item.title} /></div><p className="paragraph">{`${item.title}`} </p></div>
                                         <div className="table"><p className="paragraph">NGN {item.price}</p></div>
-                                        <div className="table"><p className="paragraph">X{item.qty}</p></div>
+                                        <div className="table"><p className="paragraph">X{item.quantity}</p></div>
                                         <div className="table action"><Link to={`/products/${item._id}`}><button>View</button></Link><Link to="/productslisting"><button onClick={()=>handleDelete(item)}>Delete</button></Link></div>
                                     </div>
                                 );

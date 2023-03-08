@@ -3,20 +3,20 @@ import React,{useState} from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Loading from "../components/Loading";
+import baseUrl  from "../config/config";
 import axios from "axios";
 const Login = ({onAdd,cart,onRemove,handleSize,cartLength}) => {
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
     const [loggedIn, setLoggedIn] = useState(false);
     const [isLoading,setIsLoading] = useState(false);
-    const baseUrl = process.env.REACT_APP_API_URL;
     const navigate = useNavigate();
 
     const handleSubmit = async (e)=>{
         e.preventDefault();
         setIsLoading(true);
         try{
-            const loginUser = await axios.post(`${baseUrl}/api/auth/login`,{
+            const loginUser = await axios.post(`${baseUrl.baseUrl}/api/auth/login`,{
                 email:email,
                 password:password
             });
@@ -68,7 +68,7 @@ const Login = ({onAdd,cart,onRemove,handleSize,cartLength}) => {
                                     </label>
 
                                     <label htmlFor="#">
-                                        {isLoading ? (<Loading/>) : (<button type="submit">Login</button>)}
+                                        {isLoading ? (<button className="loadBtn"><Loading/></button>) : (<button type="submit">Login</button>)}
                                     </label>
                                 </form>
 

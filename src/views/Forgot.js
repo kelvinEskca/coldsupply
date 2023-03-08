@@ -3,10 +3,10 @@ import React,{useState} from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import axios from "axios";
+import baseUrl  from "../config/config";
 const Forgot = ({onAdd,cart,onRemove,handleSize,cartLength}) => {
     const [email,setEmail] = useState('');
     const navigate = useNavigate();
-    const baseUrl = process.env.REACT_APP_API_URL;
     const handleSubmit = async (e) =>{
         e.preventDefault();
         if(email === '' ){
@@ -14,7 +14,7 @@ const Forgot = ({onAdd,cart,onRemove,handleSize,cartLength}) => {
         }
         else{
             try{
-                const userSubmit = await axios.post(`${baseUrl}/api/auth/forget`,{
+                const userSubmit = await axios.post(`${baseUrl.baseUrl}/api/auth/forget`,{
                     email:email
                 });
                 console.log(userSubmit);
