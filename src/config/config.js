@@ -1,5 +1,5 @@
 const baseUrl = {
-  baseUrl: "http://localhost:5000",
+  baseUrl: "https://api-production-ecae.up.railway.app",
 };
 
 export default baseUrl;
