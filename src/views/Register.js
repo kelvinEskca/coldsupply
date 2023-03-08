@@ -3,7 +3,7 @@ import React,{useState} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import Loader from "../components/Loader";
+import Loading from "../components/Loading";
 const Register = ({onAdd,cart,onRemove,handleSize,cartLength}) => {
     const [fname,setFname] = useState('');
     const [lname,setLname] = useState('');
@@ -11,6 +11,7 @@ const Register = ({onAdd,cart,onRemove,handleSize,cartLength}) => {
     const [password,setPassword] = useState('');
     const [cpassword,setcPassword] = useState('');
     const [isLoading,setIsLoading] = useState(false);
+    const baseUrl = process.env.REACT_APP_API_URL;
     const navigate = useNavigate();
 
     const handleSubmit = async (e) =>{
@@ -24,7 +25,7 @@ const Register = ({onAdd,cart,onRemove,handleSize,cartLength}) => {
         }
         else{
             try{
-                const userSubmit = await axios.post('https://api-production-ecae.up.railway.app/api/auth/register',{
+                const userSubmit = await axios.post(`${baseUrl}/api/auth/register`,{
                     email:email,
                     fname:fname,
                     lname:lname,
@@ -84,7 +85,7 @@ const Register = ({onAdd,cart,onRemove,handleSize,cartLength}) => {
                                     </label>
 
                                     <label htmlFor="#">
-                                        {isLoading ? (<Loader/>) : (<button type="submit">Create Account</button>)}
+                                        {isLoading ? (<Loading/>) : (<button type="submit">Create Account</button>)}
                                     </label>
                                 </form>
                                 <Link to='/store' className="grey">Go back to store</Link>

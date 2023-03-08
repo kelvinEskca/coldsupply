@@ -11,6 +11,7 @@ const Addresses = ({onAdd,cart,onRemove,handleSize,cartLength}) => {
     const token = localStorage.getItem('token');
     const user = JSON.parse(localStorage.getItem('user'));
     const useraddress = JSON.parse(localStorage.getItem('address'));
+    const baseUrl = process.env.REACT_APP_API_URL;
     const navigate = useNavigate();
     
     const handleForm = () =>{
@@ -36,7 +37,7 @@ const Addresses = ({onAdd,cart,onRemove,handleSize,cartLength}) => {
         e.preventDefault();
         if(address !== ''){
             try{
-                const result = await axios.post('https://api-production-ecae.up.railway.app/api/address',{
+                const result = await axios.post(`${baseUrl}/api/address`,{
                     fname:address.fname,
                     lname:address.lname,
                     email:user.email,

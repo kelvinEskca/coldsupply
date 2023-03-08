@@ -9,13 +9,14 @@ const Login = ({onAdd,cart,onRemove,handleSize,cartLength}) => {
     const [password,setPassword] = useState('');
     const [loggedIn, setLoggedIn] = useState(false);
     const [isLoading,setIsLoading] = useState(false);
+    const baseUrl = process.env.REACT_APP_API_URL;
     const navigate = useNavigate();
 
     const handleSubmit = async (e)=>{
         e.preventDefault();
         setIsLoading(true);
         try{
-            const loginUser = await axios.post('https://api-production-ecae.up.railway.app/api/auth/login',{
+            const loginUser = await axios.post(`${baseUrl}/api/auth/login`,{
                 email:email,
                 password:password
             });

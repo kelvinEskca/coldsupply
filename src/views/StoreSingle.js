@@ -5,11 +5,12 @@ import Header from "../components/Header";
 import axios from "axios";
 const StoreSingle = ({onAdd,cart,onRemove,handleSize,cartLength}) => {
     const [list,setList] = useState([]);
+    const baseUrl = process.env.REACT_APP_API_URL;
     const { id } = useParams();
     useEffect(()=>{
         const getProducts = async ()=>{
             try{
-                const res = await axios.get(`https://api-production-ecae.up.railway.app/api/product/${id}`);
+                const res = await axios.get(`${baseUrl}/api/product/${id}`);
                 setList(res.data);
             }
             catch(err){
@@ -17,7 +18,7 @@ const StoreSingle = ({onAdd,cart,onRemove,handleSize,cartLength}) => {
             }
         }
         getProducts();
-    },[id]);
+    },[id,baseUrl]);
     
     console.log(list);
     const {title,price,desc,size} = list;
@@ -30,7 +31,7 @@ const StoreSingle = ({onAdd,cart,onRemove,handleSize,cartLength}) => {
                 <section className="section single-store">
                     <div className="wrapper">
                         <div className="boxes">
-                        <div className="box">
+                            <div className="box">
                                 
                                 {list.length !== 0 ? (
                                     <>

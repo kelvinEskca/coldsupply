@@ -6,10 +6,11 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 const Store = ({onAdd,cart,onRemove,handleSize,cartLength}) => {
     const [list,setList] = useState([]);
+    const baseUrl = process.env.REACT_APP_API_URL;
     useEffect(()=>{
         const getProducts = async ()=>{
             try{
-                const res = await axios.get('https://api-production-ecae.up.railway.app/api/product');
+                const res = await axios.get(`${baseUrl}/api/product`);
                 setList(res.data.products);
             }
             catch(err){
@@ -17,7 +18,7 @@ const Store = ({onAdd,cart,onRemove,handleSize,cartLength}) => {
             }
         }
         getProducts();
-    },[])
+    },[baseUrl])
     return (
         <React.Fragment>
             <Header onAdd={onAdd} cart={cart} onRemove={onRemove} handleSize={handleSize} cartLength={cartLength}/>

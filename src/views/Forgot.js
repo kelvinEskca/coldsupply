@@ -6,6 +6,7 @@ import axios from "axios";
 const Forgot = ({onAdd,cart,onRemove,handleSize,cartLength}) => {
     const [email,setEmail] = useState('');
     const navigate = useNavigate();
+    const baseUrl = process.env.REACT_APP_API_URL;
     const handleSubmit = async (e) =>{
         e.preventDefault();
         if(email === '' ){
@@ -13,7 +14,7 @@ const Forgot = ({onAdd,cart,onRemove,handleSize,cartLength}) => {
         }
         else{
             try{
-                const userSubmit = await axios.post('https://api-production-ecae.up.railway.app/api/auth/forget',{
+                const userSubmit = await axios.post(`${baseUrl}/api/auth/forget`,{
                     email:email
                 });
                 console.log(userSubmit);

@@ -4,7 +4,7 @@ import AdminHeader from "../components/AdminHeader";
 import { useNavigate } from "react-router-dom";
 import { Multiselect } from 'multiselect-react-dropdown';
 import axios from "axios";
-import Loader from "../components/Loader";
+import Loading from "../components/Loading";
 const Products = () => {
     const [size,setSize] = useState([]);
     const [price,setPrice] = useState('');
@@ -16,6 +16,7 @@ const Products = () => {
     const navigate = useNavigate();
     const token = localStorage.getItem('token');
     const [isLoading,setIsLoading] = useState(false);
+    const baseUrl = process.env.REACT_APP_API_URL;
 
     const formData = new FormData();
     size.map((item,i)=>{
@@ -38,7 +39,7 @@ const Products = () => {
         }
         else{
             try{
-                const productSubmit = await axios.post('https://api-production-ecae.up.railway.app/api/product',
+                const productSubmit = await axios.post(`${baseUrl}/api/product`,
                 formData,{headers:{token:token}});
                 console.log(productSubmit);
                 if(productSubmit.status === 200){
@@ -127,6 +128,7 @@ const Products = () => {
                                         <select name="stock" id="stock" onChange={(e)=>{
                                                 setStock(e.target.value)
                                             }}>
+                                            <option defaultValue={'select'} selected>Select Option</option>
                                             <option defaultValue={'true'}>True</option>
                                             <option defaultValue={'false'}>False</option>
                                         </select>
@@ -160,7 +162,7 @@ const Products = () => {
 
                                     <div className="row">
                                         <label htmlFor="#">
-                                        {isLoading ? (<Loader/>) : (<button type="submit">Save</button>)}
+                                        {isLoading ? (<Loading/>) : (<button type="submit">Save</button>)}
                                         </label>
 
                                         <label htmlFor="#">

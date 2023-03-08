@@ -9,11 +9,12 @@ const OrderListing = () => {
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
     const [orders,setorders] = useState([]);
+    const baseUrl = process.env.REACT_APP_API_URL;
 
     const handleDelete = async (i) =>{
         const id = i._id;
         try{
-            const res = await axios.post(`https://api-production-ecae.up.railway.app/api/order/delete/${id}`,{
+            const res = await axios.post(`${baseUrl}/api/order/delete/${id}`,{
                 id:id
             },{ headers:{token:token} });
             if(res.status === 200){
@@ -32,7 +33,7 @@ const OrderListing = () => {
     useEffect(()=>{
         const getorders = async ()=>{
             try{
-                const res = await axios.get('https://api-production-ecae.up.railway.app/api/order',{ headers:{token:token} });
+                const res = await axios.get(`${baseUrl}/api/order`,{ headers:{token:token} });
                 setorders(res.data.orders);
             }
             catch(err){
@@ -40,7 +41,7 @@ const OrderListing = () => {
             }
         }
         getorders();
-    },[token]);
+    },[token,baseUrl]);
     return (
         <React.Fragment>
             <AdminHeader/>

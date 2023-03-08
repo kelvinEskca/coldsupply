@@ -14,6 +14,7 @@ const EditProduct = () => {
     const [quantityUpdate,setQuantity] = useState('');
     const [stockUpdate,setStock] = useState('');
     const [imageUpdate,setImage] = useState([]);
+    const baseUrl = process.env.REACT_APP_API_URL;
     const navigate = useNavigate();
     const token = localStorage.getItem('token');
 
@@ -35,7 +36,7 @@ const EditProduct = () => {
     useEffect(()=>{
         const getProducts = async ()=>{
             try{
-                const res = await axios.get(`https://api-production-ecae.up.railway.app/api/product/${id}`);
+                const res = await axios.get(`${baseUrl}/api/product/${id}`);
                 setList(res.data);
             }
             catch(err){
@@ -43,7 +44,7 @@ const EditProduct = () => {
             }
         }
         getProducts();
-    },[id])
+    },[id,baseUrl])
     
     const {title,price,desc,qty} = list;
 
@@ -54,7 +55,7 @@ const EditProduct = () => {
         }
         else{
             try{
-                const productSubmit = await axios.post(`https://api-production-ecae.up.railway.app/api/product/update/${id}`,
+                const productSubmit = await axios.post(`${baseUrl}/api/product/update/${id}`,
                 formData,{headers:{token:token}});
                 if(productSubmit.data.status === 200){
                     alert(productSubmit.data.message);

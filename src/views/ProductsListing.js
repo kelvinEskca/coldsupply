@@ -7,11 +7,12 @@ import axios from "axios";
 const ProductsListing = () => {
     const [products,setproducts] = useState([]);
     const token = localStorage.getItem('token');
+    const baseUrl = process.env.REACT_APP_API_URL;
     const navigate = useNavigate();
     const handleDelete = async (i) =>{
         const id = i._id;
         try{
-            const res = await axios.post(`https://api-production-ecae.up.railway.app/api/product/delete/${id}`,{
+            const res = await axios.post(`${baseUrl}/api/product/delete/${id}`,{
                 id:id
             },{ headers:{token:token} });
             if(res.status === 200){
@@ -29,7 +30,7 @@ const ProductsListing = () => {
     useEffect(()=>{
         const getProducts = async ()=>{
             try{
-                const res = await axios.get('https://api-production-ecae.up.railway.app/api/product');
+                const res = await axios.get(`${baseUrl}/api/product`);
                 setproducts(res.data.products);
             }
             catch(err){
@@ -37,7 +38,7 @@ const ProductsListing = () => {
             }
         }
         getProducts();
-    },[]);
+    },[baseUrl]);
 
     return (
         <React.Fragment>
