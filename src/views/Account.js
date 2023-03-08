@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { Link,useNavigate } from "react-router-dom";
 import axios from "axios";
-const Account = ({onAdd,cart,onRemove,handleSize,cartLength}) => {
+const Account = ({onAdd,cart,onRemove,handleSize,cartLength,sizeOption}) => {
     axios.defaults.withCredentials = true;
     const auth = localStorage.getItem('token');
     const user = JSON.parse(localStorage.getItem('user'));
@@ -21,7 +21,7 @@ const Account = ({onAdd,cart,onRemove,handleSize,cartLength}) => {
 
     return (
         <React.Fragment>
-            <Header onAdd={onAdd} cart={cart} onRemove={onRemove} handleSize={handleSize} cartLength={cartLength}/>
+            <Header onAdd={onAdd} cart={cart} onRemove={onRemove} handleSize={handleSize} cartLength={cartLength} sizeOption={sizeOption}/>
             <main className="main">
                 <section className="section account">
                     <div className="wrapper">

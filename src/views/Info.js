@@ -1,10 +1,10 @@
 import React from "react";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-const Info = ({onAdd,cart,onRemove,handleSize,cartLength}) => {
+const Info = ({onAdd,cart,onRemove,handleSize,cartLength,sizeOption}) => {
     return (
         <React.Fragment>
-            <Header onAdd={onAdd} cart={cart} onRemove={onRemove} handleSize={handleSize} cartLength={cartLength}/>
+            <Header onAdd={onAdd} cart={cart} onRemove={onRemove} handleSize={handleSize} cartLength={cartLength} sizeOption={sizeOption}/>
             <main className="main">
                 <section className="section info">
                     <div className="wrapper">

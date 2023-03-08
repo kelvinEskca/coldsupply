@@ -3,14 +3,14 @@ import Circle from "../components/Circle";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 
-const ShippingInfo = ({onAdd,cart,onRemove,handleSize,cartLength}) => {
+const ShippingInfo = ({onAdd,cart,onRemove,handleSize,cartLength,sizeOption}) => {
     const itemsPrice = cart.reduce((a,c)=> a + c.quantity * c.price, 0);
     const taxPrice = itemsPrice * 0.14;
     const shippingPrice = itemsPrice > 2000 ? 0 : 20;
     const totalPrice = itemsPrice + taxPrice + shippingPrice;
     return (
         <React.Fragment>
-            <Header onAdd={onAdd} cart={cart} onRemove={onRemove} handleSize={handleSize} cartLength={cartLength}/>
+            <Header onAdd={onAdd} cart={cart} onRemove={onRemove} handleSize={handleSize} cartLength={cartLength} sizeOption={sizeOption}/>
             <main className="main">
                 <Circle  number={"1"} classNames={"half"}/>
                 <section className="section register shippinginfo">
@@ -75,7 +75,7 @@ const ShippingInfo = ({onAdd,cart,onRemove,handleSize,cartLength}) => {
                                             <div className="cart-items" key={i}>
                                                 <div className="items">
                                                     <div className="box">
-                                                        <img src={`../assets/${item.image[0].originalname}`} alt={item.title} />
+                                                        <img src={`${item.image[0].url}`} alt={item.title} />
                                                     </div>
                                                     <div className="desc">
                                                         <div className="desc-row">

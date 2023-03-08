@@ -5,7 +5,7 @@ import axios from 'axios';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import baseUrl  from "../config/config";
-const Store = ({onAdd,cart,onRemove,handleSize,cartLength}) => {
+const Store = ({onAdd,cart,onRemove,handleSize,cartLength,sizeOption}) => {
     const [list,setList] = useState([]);
     useEffect(()=>{
         const getProducts = async ()=>{
@@ -21,7 +21,7 @@ const Store = ({onAdd,cart,onRemove,handleSize,cartLength}) => {
     },[])
     return (
         <React.Fragment>
-            <Header onAdd={onAdd} cart={cart} onRemove={onRemove} handleSize={handleSize} cartLength={cartLength}/>
+            <Header onAdd={onAdd} cart={cart} onRemove={onRemove} handleSize={handleSize} cartLength={cartLength} sizeOption={sizeOption}/>
             <main className="main">
                 <section className="section apparel">
                     <div className="wrapper">

@@ -20,8 +20,10 @@ const Products = () => {
 
     const formData = new FormData();
     if (Array.isArray(size)) {
-        const sizeValues = size.map((item) => item.size);
-        formData.append("size", sizeValues);
+        const sizeArrays = size.map(item => [item.size]);
+        sizeArrays.forEach(item => {
+            formData.append("size[]", item);
+        });
     } else {
         formData.append("size", size);
     }
@@ -70,8 +72,6 @@ const Products = () => {
         {size:"XXL",id:4},
     ]
     
-    const [options] = useState(data);
-
     const cancel = (e) =>{
         e.preventDefault();
         setSize([]);
@@ -117,9 +117,16 @@ const Products = () => {
                     
                                    
                                     <label htmlFor="#">Sizes Available
-                                        <Multiselect options={options} displayValue="size" onSelect={(e)=>{
-                                            setSize([...e])
-                                        }}onRemove={(size) => setSize(size)}/>
+                                        <Multiselect
+                                            options={data}
+                                            displayValue="size"
+                                            onSelect={(selectedList, selectedItem) => {
+                                                setSize([...size, selectedItem]);
+                                            }}
+                                            onRemove={(selectedList, removedItem) => {
+                                                setSize(size.filter(item => item.id !== removedItem.id));
+                                            }}
+                                        />
                                     </label>
                                  
                                     

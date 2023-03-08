@@ -4,7 +4,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import axios from "axios";
 import baseUrl  from "../config/config";
-const Forgot = ({onAdd,cart,onRemove,handleSize,cartLength}) => {
+const Forgot = ({onAdd,cart,onRemove,handleSize,cartLength,sizeOption}) => {
     const [email,setEmail] = useState('');
     const navigate = useNavigate();
     const handleSubmit = async (e) =>{
@@ -28,7 +28,7 @@ const Forgot = ({onAdd,cart,onRemove,handleSize,cartLength}) => {
     }
     return (
         <React.Fragment>
-            <Header onAdd={onAdd} cart={cart} onRemove={onRemove} handleSize={handleSize} cartLength={cartLength}/>
+            <Header onAdd={onAdd} cart={cart} onRemove={onRemove} handleSize={handleSize} cartLength={cartLength} sizeOption={sizeOption}/>
             <main className="main">
                 <section className="section register">
                     <div className="wrapper">

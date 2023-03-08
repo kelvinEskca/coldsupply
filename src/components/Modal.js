@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-const Modal = ({cart, modaltoggle,onRemove,onAdd}) => {
+const Modal = ({cart, modaltoggle,onRemove,onAdd,sizeOption}) => {
     const itemsPrice = cart.reduce((a,c)=> a + c.quantity * c.price, 0);
     const taxPrice = itemsPrice * 0.14;
     const shippingPrice = itemsPrice > 2000 ? 0 : 20;
@@ -38,7 +38,7 @@ const Modal = ({cart, modaltoggle,onRemove,onAdd}) => {
                                     </div>
                                     <div className="desc">
                                         <div className="desc-row">
-                                            <h3 className="heading">{item.title}</h3>
+                                            <h3 className="heading">{item.title} {sizeOption}</h3>
                                         </div>
                                         <div className="qty-toggle">
                                             <span className="minus" onClick={()=> onRemove(item)}>-</span>

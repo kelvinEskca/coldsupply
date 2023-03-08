@@ -5,7 +5,7 @@ import Footer from "../components/Footer";
 import Loading from "../components/Loading";
 import baseUrl  from "../config/config";
 import axios from "axios";
-const Login = ({onAdd,cart,onRemove,handleSize,cartLength}) => {
+const Login = ({onAdd,cart,onRemove,handleSize,cartLength,sizeOption}) => {
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
     const [loggedIn, setLoggedIn] = useState(false);
@@ -46,7 +46,7 @@ const Login = ({onAdd,cart,onRemove,handleSize,cartLength}) => {
 
     return (
         <React.Fragment>
-            <Header onAdd={onAdd} cart={cart} onRemove={onRemove} handleSize={handleSize} cartLength={cartLength}/>
+            <Header onAdd={onAdd} cart={cart} onRemove={onRemove} handleSize={handleSize} cartLength={cartLength} sizeOption={sizeOption}/>
             <main className="main">
                 <section className="section register">
                     <div className="wrapper">

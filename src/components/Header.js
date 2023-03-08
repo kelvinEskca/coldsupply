@@ -2,7 +2,7 @@ import React,{useState} from "react";
 import { Link } from "react-router-dom";
 import Modal from './Modal';
 import axios from "axios";
-const Header = ({cartLength,cart,onAdd,onRemove}) => {
+const Header = ({cartLength,cart,onAdd,onRemove,sizeOption}) => {
     axios.defaults.withCredentials = true;
     const [modalOpen, setModalOpen] = useState(false);
     const user = JSON.parse(localStorage.getItem('user'));
@@ -25,7 +25,8 @@ const Header = ({cartLength,cart,onAdd,onRemove}) => {
                             <li><Link to="/info">Info</Link></li>
                             <li><Link to="/privacy">Privacy Policy</Link></li>
                             <li><Link to="/terms">Terms and Condtions</Link></li>
-                            <li><Link to="/account"><img src="../assets/radix-icons_avatar.svg" alt="avatar" /></Link></li>
+                            {user.isAdmin ?(<li><Link to="/admindashboard"><img src="../assets/radix-icons_avatar.svg" alt="avatar" /></Link></li>):(<li><Link to="/account"><img src="../assets/radix-icons_avatar.svg" alt="avatar" /></Link></li>)}
+                            
                             <li onClick={handleToggle} className="cart"><img src="../assets/shopping-cart.svg" alt="cart" /><h3 className="heading size">{cartLength}</h3></li>
                         </ul>
                     </nav>
@@ -51,7 +52,7 @@ const Header = ({cartLength,cart,onAdd,onRemove}) => {
                     </nav>
                 </header>
             )}
-            <Modal  modaltoggle={modalOpen} cart={cart} onAdd={onAdd}  onRemove={onRemove}/>
+            <Modal  modaltoggle={modalOpen} cart={cart} onAdd={onAdd} onRemove={onRemove} sizeOption={sizeOption}/>
         </React.Fragment>
     );
 }

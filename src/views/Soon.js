@@ -2,27 +2,6 @@ import React,{useEffect,useState} from "react";
 import Loader from "../components/Loader";
 //import axios from "axios";
 const Soon = () => {
-    //const [email,setEmail] = useState('');
-    // const handleSubmit = async (e)=>{
-    //     e.preventDefault();
-    //     if(email !== ""){
-    //         try{
-    //             const submit = await axios.post('http://localhost:5000/api/subscribe',{
-    //                 email:email
-    //             });
-    //             if(submit.status === 200){
-    //                 alert('Your Subscription is successful');
-    //             }
-    //         }
-    //         catch(err){
-    //             console.log(err);
-    //         }
-    //     }
-    //     else{
-    //         alert('Please Enter Your Email')
-    //     }
-    // }
-
     const [showComponent, setShowComponent] = useState(true);
     useEffect(() => {
         if (showComponent) {

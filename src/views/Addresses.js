@@ -4,7 +4,7 @@ import Footer from "../components/Footer";
 import { Link,useNavigate } from "react-router-dom";
 import baseUrl  from "../config/config";
 import axios from "axios";
-const Addresses = ({onAdd,cart,onRemove,handleSize,cartLength}) => {
+const Addresses = ({onAdd,cart,onRemove,handleSize,cartLength,sizeOption}) => {
     axios.defaults.withCredentials = true;
     const [formactive,setformactive] = useState(false);
     const [editform,setEditForm] = useState(false);
@@ -112,7 +112,7 @@ const Addresses = ({onAdd,cart,onRemove,handleSize,cartLength}) => {
     
     return (
         <React.Fragment>
-            <Header onAdd={onAdd} cart={cart} onRemove={onRemove} handleSize={handleSize} cartLength={cartLength}/>
+            <Header onAdd={onAdd} cart={cart} onRemove={onRemove} handleSize={handleSize} cartLength={cartLength} sizeOption={sizeOption}/>
             <main className="main">
                 <section className="section account">
                     <div className="wrapper">
