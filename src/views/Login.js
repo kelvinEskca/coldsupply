@@ -2,7 +2,7 @@ import { Link,useNavigate } from "react-router-dom";
 import React,{useState} from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import Loader from "../components/Loader";
+import Loading from "../components/Loading";
 import axios from "axios";
 const Login = ({onAdd,cart,onRemove,handleSize,cartLength}) => {
     const [email,setEmail] = useState('');
@@ -67,7 +67,7 @@ const Login = ({onAdd,cart,onRemove,handleSize,cartLength}) => {
                                     </label>
 
                                     <label htmlFor="#">
-                                        {isLoading ? (<Loader/>) : (<button type="submit">Login</button>)}
+                                        {isLoading ? (<Loading/>) : (<button type="submit">Login</button>)}
                                     </label>
                                 </form>
 
